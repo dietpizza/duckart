@@ -12,7 +12,7 @@ productsRouter.get(
   async (req: Request, res: Response) => {
     const data = await getAllProducts();
     res.json({
-      ok: true,
+      ok: data.length > 0,
       data,
     });
   }
