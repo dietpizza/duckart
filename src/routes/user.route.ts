@@ -3,7 +3,6 @@ import { Router, Request, Response } from 'express';
 import { getHash, getToken, getPlainObject } from '../utils';
 import { createUser, findByEmail } from '../services/user.service';
 import { Role } from '../config/roles';
-import { User } from '../models/user.model';
 
 export const userRouter = Router();
 
@@ -11,12 +10,12 @@ userRouter.post(
   '/login',
   async (req: Request, res: Response): Promise<void> => {
     if (req.body.email && req.body.password) {
-      const customer = await findByEmail(req.body.email);
+      const user = await findByEmail(req.body.email);
 
-      if (customer) {
-        const payload = getPlainObject(customer);
+      if (user) {
+        const payload = getPlainObject(user);
         const token =
-          getHash(req.body.password) === customer.password
+          getHash(req.body.password) === user.password
             ? getToken(payload)
             : null;
         res.json({

@@ -9,7 +9,7 @@ export const productsRouter = Router();
 productsRouter.get(
   '/',
   authorize([Role.Customer, Role.Admin]),
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     const data = await getAllProducts();
     res.json({
       ok: data.length > 0,
@@ -21,7 +21,7 @@ productsRouter.get(
 productsRouter.post(
   '/add',
   authorize([Role.Admin]),
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     const { name, description, price } = req.body;
 
     if (name && description && price) {
